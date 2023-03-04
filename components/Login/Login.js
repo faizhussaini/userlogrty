@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -11,10 +11,13 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
   const [collegename, setcollegename] = useState('')
+  const simply = useRef()
 
   const collegenameHandler=(e)=>{
     setcollegename(e.target.value)
-   
+    setFormIsValid(
+      collegename.trim().length<6
+    )
   }
 
   const emailChangeHandler = (event) => {
@@ -44,6 +47,7 @@ const Login = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
     props.onLogin(enteredEmail, enteredPassword);
+    console.log(simply)
   };
 
   return (
@@ -56,6 +60,7 @@ const Login = (props) => {
         >
           <label htmlFor="email">E-Mail</label>
           <input
+          ref={simply}
             type="email"
             id="email"
             value={enteredEmail}
